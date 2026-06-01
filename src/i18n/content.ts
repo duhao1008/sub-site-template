@@ -1,0 +1,591 @@
+import { siteConfig } from '../site.config';
+
+export type Locale = 'en' | 'zh' | 'ja' | 'ko';
+export type ToolId = 'formatter' | 'validator' | 'viewer' | 'minifier';
+export type PageId =
+  | 'home'
+  | 'about'
+  | 'privacy'
+  | 'terms'
+  | 'contact'
+  | 'faq'
+  | 'appList'
+  | 'siteList'
+  | ToolId
+  | 'formatOnline'
+  | 'validateLineColumn'
+  | 'treeViewer'
+  | 'compressOnline';
+
+export const locales: Locale[] = ['en', 'zh', 'ja', 'ko'];
+
+export const localeLabels: Record<Locale, string> = {
+  en: 'English',
+  zh: '中文',
+  ja: '日本語',
+  ko: '한국어',
+};
+
+export const baseSlugs: Record<PageId, string> = {
+  home: '',
+  formatter: 'json-formatter',
+  validator: 'json-validator',
+  viewer: 'json-viewer',
+  minifier: 'json-minifier',
+  formatOnline: 'format-json-online',
+  validateLineColumn: 'validate-json-line-column',
+  treeViewer: 'json-tree-viewer',
+  compressOnline: 'compress-json-online',
+  about: 'about',
+  privacy: 'privacy',
+  terms: 'terms',
+  contact: 'contact',
+  faq: 'faq',
+  appList: 'apps',
+  siteList: 'tools',
+};
+
+export const navToolIds: PageId[] = ['formatter', 'validator', 'viewer', 'minifier'];
+export const longTailIds: PageId[] = ['formatOnline', 'validateLineColumn', 'treeViewer', 'compressOnline'];
+
+export interface SeoBlock {
+  title: string;
+  description: string;
+  h1: string;
+  intro: string;
+  steps: string[];
+  example: string;
+}
+
+const privacyLine = 'All processing happens locally in your browser.';
+
+const enPages: Record<PageId, SeoBlock> = {
+  home: {
+    title: 'JSON Tools - Format, Validate, View and Minify JSON Online',
+    description: 'Free browser-based JSON formatter, validator, viewer and minifier for developers. No login, no upload, all JSON processing stays local.',
+    h1: 'JSON Tools for Formatting, Validation, Viewing and Minifying',
+    intro: 'Paste JSON to format, validate, inspect as a tree, or compress it for production payloads. The tool is built for quick developer workflows and local-only processing.',
+    steps: ['Paste JSON or load the example.', 'Choose format, validate, view tree, or minify.', 'Review errors, statistics, and copy the result.'],
+    example: 'Use the sample API response to test nested arrays, booleans, null values, and object fields.',
+  },
+  formatter: {
+    title: 'JSON Formatter - Pretty Print and Validate JSON Online',
+    description: 'Format JSON with indentation, validate syntax, find error position, copy formatted output, or minify JSON in your browser.',
+    h1: 'JSON Formatter',
+    intro: 'Convert compact or messy JSON into readable, consistently indented output while checking that the document is valid.',
+    steps: ['Paste your JSON.', 'Click Format JSON.', 'Fix any line and column error, then copy the formatted output.'],
+    example: 'The example contains nested user, settings, and event data to demonstrate readable indentation.',
+  },
+  validator: {
+    title: 'JSON Validator - Check JSON Syntax with Line and Column',
+    description: 'Validate JSON online in the browser and get useful syntax error details with estimated line and column information.',
+    h1: 'JSON Validator',
+    intro: 'Check whether JSON is valid before using it in an API request, config file, test fixture, or documentation page.',
+    steps: ['Paste the JSON you want to check.', 'Click Validate JSON.', 'Read the validity result, line and column, and copy the report if needed.'],
+    example: 'Load the example, then remove a comma or quote to see how line and column diagnostics work.',
+  },
+  viewer: {
+    title: 'JSON Viewer - Expandable Tree Viewer for JSON Data',
+    description: 'Paste JSON and browse it as an expandable tree. Format, inspect arrays and objects, and copy clean JSON output locally.',
+    h1: 'JSON Viewer',
+    intro: 'Explore nested JSON objects and arrays in a tree so API responses and configuration data are easier to scan.',
+    steps: ['Paste or load JSON.', 'Click View Tree.', 'Expand and collapse nodes while keeping formatted output available for copying.'],
+    example: 'The example has nested arrays and objects so you can test the tree viewer quickly.',
+  },
+  minifier: {
+    title: 'JSON Minifier - Compress JSON and Measure Savings',
+    description: 'Minify JSON in your browser, remove whitespace, validate syntax, and compare character count plus compression ratio.',
+    h1: 'JSON Minifier',
+    intro: 'Compress formatted JSON into a compact payload and see exactly how many characters were removed.',
+    steps: ['Paste valid JSON.', 'Click Minify JSON.', 'Review before/after character counts and copy the compressed result.'],
+    example: 'Use the formatted example to see the minifier remove whitespace without changing data values.',
+  },
+  formatOnline: {
+    title: 'Format JSON Online - Free Pretty Printer for API Responses',
+    description: 'Format JSON online for API responses, config snippets, logs, and examples. Browser-only pretty printer with copy and error hints.',
+    h1: 'Format JSON Online',
+    intro: 'A focused JSON pretty printer for developers who need to quickly turn a compact API response into readable documentation or debugging output.',
+    steps: ['Paste compact JSON from an API response.', 'Run the formatter.', 'Copy the pretty printed JSON for docs, tests, or review.'],
+    example: 'Try the sample response to see objects, arrays, and timestamps formatted consistently.',
+  },
+  validateLineColumn: {
+    title: 'Validate JSON with Line and Column Error Details',
+    description: 'Check JSON syntax and locate parse problems with estimated line and column details. Works locally in your browser.',
+    h1: 'Validate JSON with Line and Column',
+    intro: 'Use this validator when you need a fast syntax check and a practical location hint for broken JSON copied from logs, docs, or config files.',
+    steps: ['Paste the suspicious JSON.', 'Run validation.', 'Use the line and column hint to fix the first syntax problem.'],
+    example: 'Load the example and intentionally delete a closing brace to test error reporting.',
+  },
+  treeViewer: {
+    title: 'JSON Tree Viewer - Inspect Nested Objects and Arrays',
+    description: 'View JSON as a collapsible tree for nested API data. Expand objects, inspect arrays, and copy formatted JSON locally.',
+    h1: 'JSON Tree Viewer',
+    intro: 'This long-tail viewer is tuned for exploring deeply nested JSON where plain text makes relationships hard to follow.',
+    steps: ['Paste nested JSON.', 'Build the tree view.', 'Expand only the branches you need to inspect.'],
+    example: 'The sample includes profile, feature flags, tags, and event records for a realistic tree.',
+  },
+  compressOnline: {
+    title: 'Compress JSON Online - Minify JSON and Calculate Savings',
+    description: 'Compress JSON online with a local browser minifier. Compare original and minified character counts plus savings percentage.',
+    h1: 'Compress JSON Online',
+    intro: 'Use this page when you need a compact JSON string for environment variables, fixtures, network payloads, or embedded examples.',
+    steps: ['Paste readable or compact JSON.', 'Run compression.', 'Check the savings ratio and copy the minified JSON.'],
+    example: 'The example starts pretty printed so the compression savings are easy to see.',
+  },
+  about: {
+    title: 'About JSON Tools',
+    description: 'Learn about JSON Tools, a lightweight front-end utility site for formatting, validating, viewing, and minifying JSON locally.',
+    h1: 'About JSON Tools',
+    intro: 'JSON Tools is a pure front-end utility site for developers working with API payloads, configuration files, examples, and test fixtures.',
+    steps: ['Open a JSON tool.', 'Paste data locally in the browser.', 'Copy the result without creating an account.'],
+    example: 'The site keeps a matrix area ready for related tools and apps.',
+  },
+  privacy: {
+    title: 'Privacy Policy - JSON Tools',
+    description: 'Privacy policy for JSON Tools. No login, no user input collection, no upload, and all processing happens locally.',
+    h1: 'Privacy Policy',
+    intro: 'This site is designed so JSON input stays in your browser. The tools do not require accounts and do not send your pasted JSON to a server.',
+    steps: ['No login is required.', 'No user input is collected or stored.', 'All tool processing happens locally in your browser.'],
+    example: 'When you format, validate, view, or minify JSON, the browser performs the work on your device.',
+  },
+  terms: {
+    title: 'Terms of Use - JSON Tools',
+    description: 'Terms of use for JSON Tools, including availability, user responsibility, third-party links, and tool updates.',
+    h1: 'Terms of Use',
+    intro: 'JSON Tools provides general-purpose browser utilities and informational content for everyday developer workflows.',
+    steps: [
+      'Tools are provided as is, and results should be reviewed before important use.',
+      'You are responsible for checking output before publishing, submitting, or using it in production.',
+      'Tool pages, descriptions, links, and terms may change as the site evolves.',
+      'Third-party links, app stores, and external services follow their own terms and policies.',
+    ],
+    example: 'Use the tools for formatting, validation, viewing, and minification, but verify important data before relying on the result.',
+  },
+  contact: {
+    title: 'Contact - JSON Tools',
+    description: 'Contact JSON Tools for feedback, feature requests, or issue reports about the browser-based JSON utility site.',
+    h1: 'Contact JSON Tools',
+    intro: 'Use the contact information for feedback, corrections, and feature requests related to this JSON utility site.',
+    steps: ['Describe the tool page involved.', 'Include browser and device details if reporting a bug.', 'Never send private JSON payloads in feedback.'],
+    example: 'For issue reports, mention whether the problem happened in formatter, validator, viewer, or minifier.',
+  },
+  faq: {
+    title: 'FAQ - JSON Tools',
+    description: 'Frequently asked questions about JSON Tools, local browser processing, privacy, and common JSON workflows.',
+    h1: 'FAQ',
+    intro: 'Find quick answers about privacy, browser-only processing, JSON formatting, validation, viewing, and minification.',
+    steps: ['Open the FAQ page.', 'Scan the questions related to your workflow.', 'Use the linked tools when you need to process JSON.'],
+    example: 'Common questions are maintained in src/i18n/faqs.ts.',
+  },
+  appList: {
+    title: 'Published App Store Apps - JSON Tools',
+    description: 'Browse related apps and lightweight browser utilities from the JSON Tools network.',
+    h1: 'Published App Store Apps',
+    intro: 'Explore small focused apps that support developer workflows, notes, cleanup, review, and publishing tasks.',
+    steps: ['Open the apps list.', 'Choose an app that matches your workflow.', 'Follow the link to launch or learn more.'],
+    example: 'Use this page as the shared app directory for copied sub-site projects.',
+  },
+  siteList: {
+    title: 'Website Tool Collection - JSON Tools',
+    description: 'Browse related tool sub-sites and utility websites from the JSON Tools network.',
+    h1: 'Website Tool Collection',
+    intro: 'Explore related sub-sites and utility tools. This directory is designed to be shared across copied sub-site projects.',
+    steps: ['Open the tool directory.', 'Pick the related tool or sub-site you need.', 'Follow the link to visit it.'],
+    example: 'Use this page as the shared sub-site directory for all tool sites.',
+  },
+};
+
+const ui: Record<Locale, Record<string, string>> = {
+  en: {
+    siteName: siteConfig.name,
+    homeLink: 'Home',
+    footerPrivacy: 'Privacy',
+    footerTerms: 'Terms',
+    footerContact: 'Contact',
+    footerAbout: 'About',
+    footerFaq: 'FAQ',
+    formatter: 'Formatter',
+    validator: 'Validator',
+    viewer: 'Viewer',
+    minifier: 'Minifier',
+    input: 'JSON input',
+    output: 'Result',
+    format: 'Format JSON',
+    validate: 'Validate JSON',
+    view: 'View Tree',
+    minify: 'Minify JSON',
+    copy: 'Copy',
+    clear: 'Clear',
+    sample: 'Load example',
+    copied: 'Copied',
+    valid: 'Valid JSON',
+    invalid: 'Invalid JSON',
+    stats: 'Statistics',
+    quality: 'Quality hint',
+    chars: 'chars',
+    saved: 'saved',
+    validatorSuccessText: 'Valid JSON',
+    line: 'Line',
+    column: 'column',
+    emptyHint: 'Input is empty.',
+    validSyntaxHint: 'Syntax is valid strict JSON. Comments and trailing commas are not part of JSON.',
+    minifiedReadyHint: 'Compact payload is ready to copy.',
+    minifiedLargeHint: 'Large compact payload created. Review before embedding in source files.',
+    syntaxFixHint: 'Fix the first syntax error, then run the tool again.',
+    arrayHint: 'Top-level array items',
+    objectHint: 'Top-level object keys',
+    primitiveHint: 'Top-level value is valid JSON.',
+    privacy: privacyLine,
+    steps: 'How to use',
+    example: 'Example',
+    otherTools: 'Other Tools',
+    apps: 'Apps',
+    haoTools: 'hao-tools',
+    appCollection: 'Apps',
+    toolCollection: 'Tools',
+    appSearchPlaceholder: 'Filter apps by name',
+    toolSearchPlaceholder: 'Filter tools by name',
+    noResults: 'No results',
+    previousPage: 'Previous',
+    nextPage: 'Next',
+    localBadge: 'Local browser processing',
+    contactEmail: `Email: ${siteConfig.contactEmail}`,
+  },
+  zh: {
+    siteName: siteConfig.name,
+    homeLink: '首页',
+    footerPrivacy: '隐私',
+    footerTerms: '条款',
+    footerContact: '联系',
+    footerAbout: '关于',
+    footerFaq: '常见问题',
+    formatter: '格式化',
+    validator: '校验',
+    viewer: '查看器',
+    minifier: '压缩',
+    input: 'JSON 输入',
+    output: '结果',
+    format: '格式化 JSON',
+    validate: '校验 JSON',
+    view: '树形查看',
+    minify: '压缩 JSON',
+    copy: '复制',
+    clear: '清空',
+    sample: '填充示例',
+    copied: '已复制',
+    valid: 'JSON 合法',
+    invalid: 'JSON 不合法',
+    stats: '统计',
+    quality: '质量提示',
+    chars: '字符',
+    saved: '已节省',
+    validatorSuccessText: 'JSON 合法',
+    line: '行',
+    column: '列',
+    emptyHint: '输入为空。',
+    validSyntaxHint: '语法符合严格 JSON 规范。JSON 不支持注释和尾随逗号。',
+    minifiedReadyHint: '压缩结果已可复制。',
+    minifiedLargeHint: '已生成较大的压缩结果，嵌入源码前建议复核。',
+    syntaxFixHint: '先修复第一个语法错误，然后再次运行工具。',
+    arrayHint: '顶层数组项目数',
+    objectHint: '顶层对象键数量',
+    primitiveHint: '顶层值是合法 JSON。',
+    privacy: '所有处理都在你的浏览器本地完成。',
+    steps: '使用步骤',
+    example: '示例',
+    otherTools: '其他工具',
+    apps: 'Apps',
+    haoTools: 'hao-tools',
+    appCollection: 'APP 集',
+    toolCollection: '工具集',
+    appSearchPlaceholder: '按名称过滤 APP',
+    toolSearchPlaceholder: '按名称过滤工具',
+    noResults: '没有结果',
+    previousPage: '上一页',
+    nextPage: '下一页',
+    localBadge: '浏览器本地处理',
+    contactEmail: `邮箱：${siteConfig.contactEmail}`,
+  },
+  ja: {
+    siteName: siteConfig.name,
+    homeLink: 'ホーム',
+    footerPrivacy: 'プライバシー',
+    footerTerms: '利用規約',
+    footerContact: '連絡',
+    footerAbout: '概要',
+    footerFaq: 'FAQ',
+    formatter: 'フォーマット',
+    validator: '検証',
+    viewer: 'ビューア',
+    minifier: '圧縮',
+    input: 'JSON 入力',
+    output: '結果',
+    format: 'JSON を整形',
+    validate: 'JSON を検証',
+    view: 'ツリー表示',
+    minify: 'JSON を圧縮',
+    copy: 'コピー',
+    clear: 'クリア',
+    sample: 'サンプルを入力',
+    copied: 'コピー済み',
+    valid: '有効な JSON',
+    invalid: '無効な JSON',
+    stats: '統計',
+    quality: '品質ヒント',
+    chars: '文字',
+    saved: '削減',
+    validatorSuccessText: '有効な JSON',
+    line: '行',
+    column: '列',
+    emptyHint: '入力が空です。',
+    validSyntaxHint: '厳密な JSON 構文として有効です。コメントと末尾カンマは JSON には含まれません。',
+    minifiedReadyHint: '圧縮結果をコピーできます。',
+    minifiedLargeHint: '大きな圧縮結果が生成されました。ソースに埋め込む前に確認してください。',
+    syntaxFixHint: '最初の構文エラーを修正してから、もう一度実行してください。',
+    arrayHint: 'トップレベル配列の項目数',
+    objectHint: 'トップレベルオブジェクトのキー数',
+    primitiveHint: 'トップレベルの値は有効な JSON です。',
+    privacy: 'すべての処理はブラウザ内でローカルに実行されます。',
+    steps: '使い方',
+    example: '例',
+    otherTools: 'Other Tools',
+    apps: 'Apps',
+    haoTools: 'hao-tools',
+    appCollection: 'Apps',
+    toolCollection: 'Tools',
+    appSearchPlaceholder: 'アプリ名で絞り込み',
+    toolSearchPlaceholder: 'ツール名で絞り込み',
+    noResults: '結果がありません',
+    previousPage: '前へ',
+    nextPage: '次へ',
+    localBadge: 'ブラウザ内処理',
+    contactEmail: `Email: ${siteConfig.contactEmail}`,
+  },
+  ko: {
+    siteName: siteConfig.name,
+    homeLink: '홈',
+    footerPrivacy: '개인정보',
+    footerTerms: '약관',
+    footerContact: '문의',
+    footerAbout: '소개',
+    footerFaq: 'FAQ',
+    formatter: '포맷',
+    validator: '검증',
+    viewer: '뷰어',
+    minifier: '압축',
+    input: 'JSON 입력',
+    output: '결과',
+    format: 'JSON 포맷',
+    validate: 'JSON 검증',
+    view: '트리 보기',
+    minify: 'JSON 압축',
+    copy: '복사',
+    clear: '지우기',
+    sample: '예제 불러오기',
+    copied: '복사됨',
+    valid: '유효한 JSON',
+    invalid: '잘못된 JSON',
+    stats: '통계',
+    quality: '품질 힌트',
+    chars: '문자',
+    saved: '절약',
+    validatorSuccessText: '유효한 JSON',
+    line: '줄',
+    column: '열',
+    emptyHint: '입력이 비어 있습니다.',
+    validSyntaxHint: '엄격한 JSON 문법으로 유효합니다. 주석과 trailing comma는 JSON에 포함되지 않습니다.',
+    minifiedReadyHint: '압축 결과를 복사할 수 있습니다.',
+    minifiedLargeHint: '큰 압축 결과가 생성되었습니다. 소스에 넣기 전에 확인하세요.',
+    syntaxFixHint: '첫 번째 문법 오류를 수정한 뒤 다시 실행하세요.',
+    arrayHint: '최상위 배열 항목 수',
+    objectHint: '최상위 객체 키 수',
+    primitiveHint: '최상위 값은 유효한 JSON입니다.',
+    privacy: '모든 처리는 브라우저에서 로컬로 실행됩니다.',
+    steps: '사용 방법',
+    example: '예제',
+    otherTools: 'Other Tools',
+    apps: 'Apps',
+    haoTools: 'hao-tools',
+    appCollection: 'Apps',
+    toolCollection: 'Tools',
+    appSearchPlaceholder: '앱 이름으로 필터',
+    toolSearchPlaceholder: '도구 이름으로 필터',
+    noResults: '결과 없음',
+    previousPage: '이전',
+    nextPage: '다음',
+    localBadge: '브라우저 로컬 처리',
+    contactEmail: `Email: ${siteConfig.contactEmail}`,
+  },
+};
+
+const pageHeadings: Record<Exclude<Locale, 'en'>, Partial<Record<PageId, string>>> = {
+  zh: {
+    home: 'JSON 格式化、校验、查看和压缩工具',
+    formatter: 'JSON 格式化工具',
+    validator: 'JSON 校验工具',
+    viewer: 'JSON 树形查看器',
+    minifier: 'JSON 压缩工具',
+    formatOnline: '在线格式化 JSON',
+    validateLineColumn: '带行列提示的 JSON 校验',
+    treeViewer: 'JSON 树形查看器',
+    compressOnline: '在线压缩 JSON',
+    about: '关于 JSON 工具',
+    privacy: '隐私政策',
+    terms: '使用条款',
+    contact: '联系 JSON 工具',
+    faq: '常见问题',
+    appList: '已上架AppStore的app',
+    siteList: '网站工具集',
+  },
+  ja: {
+    home: 'JSON 整形・検証・表示・圧縮ツール',
+    formatter: 'JSON フォーマッター',
+    validator: 'JSON バリデーター',
+    viewer: 'JSON ツリービューア',
+    minifier: 'JSON 圧縮ツール',
+    formatOnline: 'オンライン JSON 整形',
+    validateLineColumn: '行と列付き JSON 検証',
+    treeViewer: 'JSON ツリービューア',
+    compressOnline: 'オンライン JSON 圧縮',
+    about: 'JSON Tools について',
+    privacy: 'プライバシーポリシー',
+    terms: '利用規約',
+    contact: 'お問い合わせ',
+    faq: 'FAQ',
+    appList: 'App Store 公開済みアプリ',
+    siteList: 'Web ツール集',
+  },
+  ko: {
+    home: 'JSON 포맷, 검증, 보기, 압축 도구',
+    formatter: 'JSON 포맷 도구',
+    validator: 'JSON 검증 도구',
+    viewer: 'JSON 트리 뷰어',
+    minifier: 'JSON 압축 도구',
+    formatOnline: '온라인 JSON 포맷',
+    validateLineColumn: '행과 열 정보가 있는 JSON 검증',
+    treeViewer: 'JSON 트리 뷰어',
+    compressOnline: '온라인 JSON 압축',
+    about: 'JSON Tools 소개',
+    privacy: '개인정보 처리방침',
+    terms: '이용 약관',
+    contact: '문의',
+    faq: 'FAQ',
+    appList: 'App Store에 출시된 앱',
+    siteList: '웹사이트 도구 모음',
+  },
+};
+
+const localizedPageCopy: Record<Exclude<Locale, 'en'>, Partial<Record<PageId, Partial<SeoBlock>>>> = {
+  zh: {
+    formatter: {
+      intro: '把压缩、混乱或来自接口的 JSON 转成清晰缩进的格式，同时检查语法是否有效。',
+      steps: ['粘贴 JSON。', '点击格式化 JSON。', '根据错误提示修复问题，然后复制格式化结果。'],
+      example: '示例包含用户、设置和事件数据，适合测试嵌套结构的缩进效果。',
+    },
+    validator: {
+      intro: '在用于接口请求、配置文件、测试数据或文档前，快速检查 JSON 语法。',
+      steps: ['粘贴需要检查的 JSON。', '点击校验 JSON。', '查看有效性结果、行列位置，并按需复制报告。'],
+      example: '载入示例后删除一个逗号或引号，可以测试错误定位效果。',
+    },
+    viewer: {
+      intro: '把嵌套对象和数组展开成树形结构，让 API 响应和配置数据更容易浏览。',
+      steps: ['粘贴或载入 JSON。', '点击树形查看。', '展开需要检查的节点，同时保留格式化输出。'],
+      example: '示例包含多层对象和数组，适合快速测试树形查看。',
+    },
+    minifier: {
+      intro: '把格式化 JSON 压缩成紧凑字符串，并查看节省的字符数。',
+      steps: ['粘贴合法 JSON。', '点击压缩 JSON。', '查看压缩前后字符数并复制结果。'],
+      example: '使用格式化示例，可以直观看到空白字符被移除后的效果。',
+    },
+  },
+  ja: {
+    formatter: {
+      intro: '圧縮済み、乱れた、または API 由来の JSON を読みやすいインデント形式に整え、構文も確認します。',
+      steps: ['JSON を貼り付けます。', 'JSON を整形します。', 'エラーがあれば修正し、整形結果をコピーします。'],
+      example: 'サンプルにはユーザー、設定、イベントが含まれ、入れ子構造の整形を確認できます。',
+    },
+    validator: {
+      intro: 'API リクエスト、設定ファイル、テストデータ、ドキュメントに使う前に JSON 構文を確認できます。',
+      steps: ['確認したい JSON を貼り付けます。', 'JSON を検証します。', '結果と行・列のヒントを見て修正します。'],
+      example: 'サンプルからカンマや引用符を削除すると、エラー位置の表示を試せます。',
+    },
+    viewer: {
+      intro: '入れ子のオブジェクトや配列をツリー形式で表示し、API レスポンスや設定データを見やすくします。',
+      steps: ['JSON を貼り付けるかサンプルを読み込みます。', 'ツリー表示を実行します。', '必要な枝だけ展開して確認します。'],
+      example: 'サンプルには複数階層の配列とオブジェクトが含まれます。',
+    },
+    minifier: {
+      intro: '整形済み JSON をコンパクトな文字列に圧縮し、削減された文字数を確認できます。',
+      steps: ['有効な JSON を貼り付けます。', 'JSON を圧縮します。', '文字数の変化を確認して結果をコピーします。'],
+      example: '整形済みサンプルを使うと、空白が削除される様子が分かります。',
+    },
+  },
+  ko: {
+    formatter: {
+      intro: '압축되었거나 정리되지 않은 JSON, API 응답을 읽기 쉬운 들여쓰기 형식으로 바꾸고 문법도 확인합니다.',
+      steps: ['JSON을 붙여넣습니다.', 'JSON 포맷을 실행합니다.', '오류가 있으면 수정한 뒤 포맷 결과를 복사합니다.'],
+      example: '예제에는 사용자, 설정, 이벤트 데이터가 있어 중첩 구조 포맷을 확인하기 좋습니다.',
+    },
+    validator: {
+      intro: 'API 요청, 설정 파일, 테스트 데이터, 문서에 사용하기 전에 JSON 문법을 빠르게 확인합니다.',
+      steps: ['검사할 JSON을 붙여넣습니다.', 'JSON 검증을 실행합니다.', '결과와 줄/열 힌트를 보고 수정합니다.'],
+      example: '예제에서 쉼표나 따옴표를 지우면 오류 위치 표시를 테스트할 수 있습니다.',
+    },
+    viewer: {
+      intro: '중첩 객체와 배열을 트리로 펼쳐 API 응답과 설정 데이터를 더 쉽게 살펴봅니다.',
+      steps: ['JSON을 붙여넣거나 예제를 불러옵니다.', '트리 보기를 실행합니다.', '필요한 노드만 펼쳐 확인합니다.'],
+      example: '예제에는 여러 단계의 배열과 객체가 포함되어 있습니다.',
+    },
+    minifier: {
+      intro: '포맷된 JSON을 짧은 문자열로 압축하고 절약된 문자 수를 확인합니다.',
+      steps: ['유효한 JSON을 붙여넣습니다.', 'JSON 압축을 실행합니다.', '문자 수 변화를 확인하고 결과를 복사합니다.'],
+      example: '포맷된 예제를 사용하면 공백 제거 효과를 쉽게 볼 수 있습니다.',
+    },
+  },
+};
+
+function translatePages(locale: Exclude<Locale, 'en'>): Record<PageId, SeoBlock> {
+  const pages = JSON.parse(JSON.stringify(enPages)) as Record<PageId, SeoBlock>;
+  const headings = pageHeadings[locale];
+  const description = {
+    zh: '纯前端 JSON 工具，支持格式化、校验、树形查看和压缩。无需登录，不上传输入，浏览器本地处理。',
+    ja: 'JSON の整形、検証、ツリー表示、圧縮を行うフロントエンド専用ツールです。ログイン不要で、入力はアップロードされません。',
+    ko: 'JSON 포맷, 검증, 트리 보기, 압축을 지원하는 프런트엔드 전용 도구입니다. 로그인 없이 브라우저에서 로컬로 처리합니다.',
+  }[locale];
+
+  (Object.keys(pages) as PageId[]).forEach((id) => {
+    const h1 = headings[id] || pages[id].h1;
+    const localized = localizedPageCopy[locale][id] || {};
+    pages[id].title = `${h1} - ${siteConfig.name}`;
+    pages[id].description = description;
+    pages[id].h1 = h1;
+    pages[id].intro = localized.intro || description;
+    pages[id].steps = localized.steps || {
+      zh: ['粘贴 JSON 或打开对应页面。', '运行工具。', '查看结果并复制。'],
+      ja: ['JSON を貼り付けるか対象ページを開きます。', 'ツールを実行します。', '結果を確認してコピーします。'],
+      ko: ['JSON을 붙여넣거나 해당 페이지를 엽니다.', '도구를 실행합니다.', '결과를 확인하고 복사합니다.'],
+    }[locale];
+    pages[id].example = localized.example || pages[id].example;
+  });
+
+  return pages;
+}
+
+const dictionaries: Record<Locale, { ui: Record<string, string>; pages: Record<PageId, SeoBlock> }> = {
+  en: { ui: ui.en, pages: enPages },
+  zh: { ui: ui.zh, pages: translatePages('zh') },
+  ja: { ui: ui.ja, pages: translatePages('ja') },
+  ko: { ui: ui.ko, pages: translatePages('ko') },
+};
+
+export function normalizeLocale(value: unknown): Locale {
+  const raw = String(value || '').toLowerCase();
+  if (raw.startsWith('zh') || raw.includes('中文')) return 'zh';
+  if (raw.startsWith('ja') || raw.includes('日本')) return 'ja';
+  if (raw.startsWith('ko') || raw.includes('한국')) return 'ko';
+  return 'en';
+}
+
+export function t(locale: Locale) {
+  return dictionaries[locale] || dictionaries.en;
+}
