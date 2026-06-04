@@ -16,14 +16,14 @@
               v-model="query"
               name="keyword"
               type="search"
-              :placeholder="labels.toolSearchPlaceholder"
+              :placeholder="uiLabel('toolSearchPlaceholder', 'Filter tools by name')"
               @keydown.enter="applySearch"
             />
           </label>
-          <button type="button" @click="applySearch">{{ labels.search }}</button>
+          <button type="button" @click="applySearch">{{ uiLabel('search', 'Search') }}</button>
         </div>
 
-        <p v-if="items.length === 0" class="directory-status">{{ labels.noResults }}</p>
+        <p v-if="items.length === 0" class="directory-status">{{ uiLabel('noResults', 'No results') }}</p>
         <div v-else class="directory-grid">
           <a v-for="site in pagedItems" :key="site.url + site.name" class="directory-card" :href="site.url" target="_blank" rel="noopener">
             <span class="directory-card-copy">
@@ -34,9 +34,9 @@
         </div>
 
         <div v-if="pageCount > 1" class="pagination-bar">
-          <button type="button" :disabled="currentPage === 1" @click="currentPage -= 1">{{ labels.previousPage }}</button>
+          <button type="button" :disabled="currentPage === 1" @click="currentPage -= 1">{{ uiLabel('previousPage', 'Previous') }}</button>
           <span>{{ currentPage }} / {{ pageCount }}</span>
-          <button type="button" :disabled="currentPage === pageCount" @click="currentPage += 1">{{ labels.nextPage }}</button>
+          <button type="button" :disabled="currentPage === pageCount" @click="currentPage += 1">{{ uiLabel('nextPage', 'Next') }}</button>
         </div>
       </template>
     </section>
@@ -87,6 +87,12 @@ const { items, query, applySearch, currentPage, loading, error, pageCount, paged
   errorMessage: 'Failed to load tools.',
   mapItems: mapSites,
 });
+
+function uiLabel(key: string, fallback: string): string {
+  const ui = labels.value as unknown as Record<string, string | Record<string, string>>;
+  const nested = ui.labels as Record<string, string> | undefined;
+  return (ui[key] as string | undefined) || nested?.[key] || fallback;
+}
 
 function mapSites(data: RemoteSiteList, currentLocale: Locale): SiteItem[] {
   return getRemoteSites(data).map((site) => {
