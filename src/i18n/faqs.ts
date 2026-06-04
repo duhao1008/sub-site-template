@@ -5,7 +5,7 @@ export interface FaqItem {
   a: string;
 }
 
-export const faqItems: Record<Locale, FaqItem[]> = {
+export const faqItems: Partial<Record<Locale, FaqItem[]>> = {
   en: [
     {
       q: 'Does this site upload my input?',

@@ -11,12 +11,19 @@
         <div class="directory-toolbar">
           <label>
             <span class="sr-only">Filter apps by name</span>
-            <input v-model="query" type="search" :placeholder="labels.appSearchPlaceholder" />
+            <input
+              id="app-directory-keyword"
+              v-model="query"
+              name="keyword"
+              type="search"
+              :placeholder="labels.appSearchPlaceholder"
+              @keydown.enter="applySearch"
+            />
           </label>
-          <span>{{ filteredItems.length }} / {{ items.length }}</span>
+          <button type="button" @click="applySearch">{{ labels.search }}</button>
         </div>
 
-        <p v-if="filteredItems.length === 0" class="directory-status">{{ labels.noResults }}</p>
+        <p v-if="items.length === 0" class="directory-status">{{ labels.noResults }}</p>
         <div v-else class="directory-grid">
           <a v-for="app in pagedItems" :key="app.url + app.name" class="directory-card" :href="app.url" target="_blank" rel="noopener">
             <img v-if="app.icon" :src="app.icon" :alt="app.name" loading="lazy" />
@@ -67,12 +74,17 @@ interface RemoteApp {
   }>>;
 }
 
+interface RemoteResource<T> {
+  json?: T;
+}
+
 interface RemoteAppList {
   apps?: RemoteApp[];
+  items?: RemoteResource<RemoteApp>[];
 }
 
 const { locale, labels, page } = useLocalizedPage('appList');
-const { items, query, currentPage, loading, error, filteredItems, pageCount, pagedItems } = useRemoteDirectory<
+const { items, query, applySearch, currentPage, loading, error, pageCount, pagedItems } = useRemoteDirectory<
   RemoteAppList,
   AppItem,
   Locale
@@ -82,11 +94,10 @@ const { items, query, currentPage, loading, error, filteredItems, pageCount, pag
   pageSize: siteConfig.directories.pageSize,
   errorMessage: 'Failed to load apps.',
   mapItems: mapApps,
-  getSearchText: (app) => [app.name, app.subtitle, app.description].filter(Boolean).join(' '),
 });
 
 function mapApps(data: RemoteAppList, currentLocale: Locale): AppItem[] {
-  return (data.apps || []).map((app) => {
+  return getRemoteApps(data).map((app) => {
     const localized = app.translations?.[currentLocale] || app.translations?.en;
     return {
       name: localized?.displayName || app.displayName,
@@ -95,6 +106,13 @@ function mapApps(data: RemoteAppList, currentLocale: Locale): AppItem[] {
       icon: app.icon100,
       url: localized?.appStoreUrl || app.appStoreUrl,
     };
-  });
+  }).filter((app) => app.name && app.url);
+}
+
+function getRemoteApps(data: RemoteAppList): RemoteApp[] {
+  if (data.apps) return data.apps;
+  return (data.items || [])
+    .map((item) => item.json)
+    .filter((app): app is RemoteApp => Boolean(app));
 }
 </script>

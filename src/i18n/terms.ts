@@ -11,7 +11,7 @@ interface TermsContent {
   items: TermsItem[];
 }
 
-const termsContent: Record<Locale, TermsContent> = {
+const termsContent: Partial<Record<Locale, TermsContent>> = {
   en: {
     intro: 'JSON Tools provides general-purpose utilities and informational content for everyday productivity workflows. It does not constitute professional advice.',
     updated: 'Last updated: 2026-05-31',
@@ -103,5 +103,5 @@ const termsContent: Record<Locale, TermsContent> = {
 };
 
 export function getTermsContent(locale: Locale): TermsContent {
-  return termsContent[locale] || termsContent.en;
+  return termsContent[locale] || termsContent.en!;
 }

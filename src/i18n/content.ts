@@ -1,6 +1,6 @@
 import { siteConfig } from '../site.config';
 
-export type Locale = 'en' | 'zh' | 'ja' | 'ko';
+export type Locale = 'en' | 'zh' | 'ja' | 'ko' | 'es' | 'pt' | 'de' | 'fr' | 'ru';
 export type ToolId = 'formatter' | 'validator' | 'viewer' | 'minifier';
 export type PageId =
   | 'home'
@@ -17,13 +17,18 @@ export type PageId =
   | 'treeViewer'
   | 'compressOnline';
 
-export const locales: Locale[] = ['en', 'zh', 'ja', 'ko'];
+export const locales: Locale[] = ['en', 'zh', 'ja', 'ko', 'es', 'pt', 'de', 'fr', 'ru'];
 
 export const localeLabels: Record<Locale, string> = {
   en: 'English',
   zh: '中文',
   ja: '日本語',
   ko: '한국어',
+  es: 'Español',
+  pt: 'Português',
+  de: 'Deutsch',
+  fr: 'Français',
+  ru: 'Русский',
 };
 
 export const baseSlugs: Record<PageId, string> = {
@@ -245,6 +250,7 @@ const ui: Record<Locale, Record<string, string>> = {
     toolCollection: 'Tools',
     appSearchPlaceholder: 'Filter apps by name',
     toolSearchPlaceholder: 'Filter tools by name',
+    search: 'Search',
     noResults: 'No results',
     previousPage: 'Previous',
     nextPage: 'Next',
@@ -300,6 +306,7 @@ const ui: Record<Locale, Record<string, string>> = {
     toolCollection: '工具集',
     appSearchPlaceholder: '按名称过滤 APP',
     toolSearchPlaceholder: '按名称过滤工具',
+    search: '搜索',
     noResults: '没有结果',
     previousPage: '上一页',
     nextPage: '下一页',
@@ -355,6 +362,7 @@ const ui: Record<Locale, Record<string, string>> = {
     toolCollection: 'Tools',
     appSearchPlaceholder: 'アプリ名で絞り込み',
     toolSearchPlaceholder: 'ツール名で絞り込み',
+    search: '検索',
     noResults: '結果がありません',
     previousPage: '前へ',
     nextPage: '次へ',
@@ -410,13 +418,113 @@ const ui: Record<Locale, Record<string, string>> = {
     toolCollection: 'Tools',
     appSearchPlaceholder: '앱 이름으로 필터',
     toolSearchPlaceholder: '도구 이름으로 필터',
+    search: '검색',
     noResults: '결과 없음',
     previousPage: '이전',
     nextPage: '다음',
     localBadge: '브라우저 로컬 처리',
     contactEmail: `Email: ${siteConfig.contactEmail}`,
   },
+  es: {
+    siteName: siteConfig.name,
+    homeLink: 'Inicio',
+    footerPrivacy: 'Privacidad',
+    footerTerms: 'Términos',
+    footerContact: 'Contacto',
+    footerAbout: 'Acerca de',
+    footerFaq: 'FAQ',
+    appCollection: 'Apps',
+    toolCollection: 'Tools',
+    appSearchPlaceholder: 'Buscar apps por nombre',
+    toolSearchPlaceholder: 'Buscar herramientas por nombre',
+    search: 'Buscar',
+    noResults: 'Sin resultados',
+    previousPage: 'Anterior',
+    nextPage: 'Siguiente',
+    localBadge: 'Procesamiento local en el navegador',
+    contactEmail: `Email: ${siteConfig.contactEmail}`,
+  },
+  pt: {
+    siteName: siteConfig.name,
+    homeLink: 'Início',
+    footerPrivacy: 'Privacidade',
+    footerTerms: 'Termos',
+    footerContact: 'Contato',
+    footerAbout: 'Sobre',
+    footerFaq: 'FAQ',
+    appCollection: 'Apps',
+    toolCollection: 'Tools',
+    appSearchPlaceholder: 'Buscar apps por nome',
+    toolSearchPlaceholder: 'Buscar ferramentas por nome',
+    search: 'Buscar',
+    noResults: 'Sem resultados',
+    previousPage: 'Anterior',
+    nextPage: 'Próxima',
+    localBadge: 'Processamento local no navegador',
+    contactEmail: `Email: ${siteConfig.contactEmail}`,
+  },
+  de: {
+    siteName: siteConfig.name,
+    homeLink: 'Start',
+    footerPrivacy: 'Datenschutz',
+    footerTerms: 'Bedingungen',
+    footerContact: 'Kontakt',
+    footerAbout: 'Über',
+    footerFaq: 'FAQ',
+    appCollection: 'Apps',
+    toolCollection: 'Tools',
+    appSearchPlaceholder: 'Apps nach Name suchen',
+    toolSearchPlaceholder: 'Tools nach Name suchen',
+    search: 'Suchen',
+    noResults: 'Keine Ergebnisse',
+    previousPage: 'Zurück',
+    nextPage: 'Weiter',
+    localBadge: 'Lokale Verarbeitung im Browser',
+    contactEmail: `Email: ${siteConfig.contactEmail}`,
+  },
+  fr: {
+    siteName: siteConfig.name,
+    homeLink: 'Accueil',
+    footerPrivacy: 'Confidentialité',
+    footerTerms: 'Conditions',
+    footerContact: 'Contact',
+    footerAbout: 'À propos',
+    footerFaq: 'FAQ',
+    appCollection: 'Apps',
+    toolCollection: 'Tools',
+    appSearchPlaceholder: 'Rechercher des apps par nom',
+    toolSearchPlaceholder: 'Rechercher des outils par nom',
+    search: 'Rechercher',
+    noResults: 'Aucun résultat',
+    previousPage: 'Précédent',
+    nextPage: 'Suivant',
+    localBadge: 'Traitement local dans le navigateur',
+    contactEmail: `Email: ${siteConfig.contactEmail}`,
+  },
+  ru: {
+    siteName: siteConfig.name,
+    homeLink: 'Главная',
+    footerPrivacy: 'Конфиденциальность',
+    footerTerms: 'Условия',
+    footerContact: 'Контакты',
+    footerAbout: 'О сайте',
+    footerFaq: 'FAQ',
+    appCollection: 'Apps',
+    toolCollection: 'Tools',
+    appSearchPlaceholder: 'Поиск приложений по названию',
+    toolSearchPlaceholder: 'Поиск инструментов по названию',
+    search: 'Поиск',
+    noResults: 'Нет результатов',
+    previousPage: 'Назад',
+    nextPage: 'Далее',
+    localBadge: 'Локальная обработка в браузере',
+    contactEmail: `Email: ${siteConfig.contactEmail}`,
+  },
 };
+
+locales.forEach((locale) => {
+  ui[locale] = { ...ui.en, ...ui[locale] };
+});
 
 const pageHeadings: Record<Exclude<Locale, 'en'>, Partial<Record<PageId, string>>> = {
   zh: {
@@ -472,6 +580,26 @@ const pageHeadings: Record<Exclude<Locale, 'en'>, Partial<Record<PageId, string>
     faq: 'FAQ',
     appList: 'App Store에 출시된 앱',
     siteList: '웹사이트 도구 모음',
+  },
+  es: {
+    appList: 'Apps publicadas en App Store',
+    siteList: 'Colección de herramientas web',
+  },
+  pt: {
+    appList: 'Apps publicadas na App Store',
+    siteList: 'Coleção de ferramentas web',
+  },
+  de: {
+    appList: 'Veröffentlichte App Store Apps',
+    siteList: 'Website-Tool-Sammlung',
+  },
+  fr: {
+    appList: 'Apps publiées sur l’App Store',
+    siteList: 'Collection d’outils web',
+  },
+  ru: {
+    appList: 'Опубликованные приложения App Store',
+    siteList: 'Коллекция веб-инструментов',
   },
 };
 
@@ -542,6 +670,11 @@ const localizedPageCopy: Record<Exclude<Locale, 'en'>, Partial<Record<PageId, Pa
       example: '포맷된 예제를 사용하면 공백 제거 효과를 쉽게 볼 수 있습니다.',
     },
   },
+  es: {},
+  pt: {},
+  de: {},
+  fr: {},
+  ru: {},
 };
 
 function translatePages(locale: Exclude<Locale, 'en'>): Record<PageId, SeoBlock> {
@@ -551,6 +684,21 @@ function translatePages(locale: Exclude<Locale, 'en'>): Record<PageId, SeoBlock>
     zh: '纯前端 JSON 工具，支持格式化、校验、树形查看和压缩。无需登录，不上传输入，浏览器本地处理。',
     ja: 'JSON の整形、検証、ツリー表示、圧縮を行うフロントエンド専用ツールです。ログイン不要で、入力はアップロードされません。',
     ko: 'JSON 포맷, 검증, 트리 보기, 압축을 지원하는 프런트엔드 전용 도구입니다. 로그인 없이 브라우저에서 로컬로 처리합니다.',
+    es: 'Herramientas JSON de frontend para formatear, validar, ver en árbol y comprimir. Sin inicio de sesión ni subida de datos.',
+    pt: 'Ferramentas JSON frontend para formatar, validar, visualizar em árvore e comprimir. Sem login e sem envio de dados.',
+    de: 'Frontend-JSON-Tools zum Formatieren, Validieren, Anzeigen als Baum und Komprimieren. Ohne Anmeldung und ohne Upload.',
+    fr: 'Outils JSON côté frontend pour formater, valider, afficher en arbre et compresser. Sans connexion ni envoi de données.',
+    ru: 'Фронтенд-инструменты JSON для форматирования, проверки, просмотра дерева и сжатия. Без входа и без загрузки данных.',
+  }[locale];
+  const defaultSteps = {
+    zh: ['粘贴 JSON 或打开对应页面。', '运行工具。', '查看结果并复制。'],
+    ja: ['JSON を貼り付けるか対象ページを開きます。', 'ツールを実行します。', '結果を確認してコピーします。'],
+    ko: ['JSON을 붙여넣거나 해당 페이지를 엽니다.', '도구를 실행합니다.', '결과를 확인하고 복사합니다.'],
+    es: ['Pegue JSON o abra la página correspondiente.', 'Ejecute la herramienta.', 'Revise el resultado y cópielo.'],
+    pt: ['Cole JSON ou abra a página correspondente.', 'Execute a ferramenta.', 'Revise o resultado e copie.'],
+    de: ['JSON einfügen oder die passende Seite öffnen.', 'Tool ausführen.', 'Ergebnis prüfen und kopieren.'],
+    fr: ['Collez du JSON ou ouvrez la page correspondante.', 'Lancez l’outil.', 'Vérifiez le résultat et copiez-le.'],
+    ru: ['Вставьте JSON или откройте нужную страницу.', 'Запустите инструмент.', 'Проверьте результат и скопируйте его.'],
   }[locale];
 
   (Object.keys(pages) as PageId[]).forEach((id) => {
@@ -560,11 +708,7 @@ function translatePages(locale: Exclude<Locale, 'en'>): Record<PageId, SeoBlock>
     pages[id].description = description;
     pages[id].h1 = h1;
     pages[id].intro = localized.intro || description;
-    pages[id].steps = localized.steps || {
-      zh: ['粘贴 JSON 或打开对应页面。', '运行工具。', '查看结果并复制。'],
-      ja: ['JSON を貼り付けるか対象ページを開きます。', 'ツールを実行します。', '結果を確認してコピーします。'],
-      ko: ['JSON을 붙여넣거나 해당 페이지를 엽니다.', '도구를 실행합니다.', '결과를 확인하고 복사합니다.'],
-    }[locale];
+    pages[id].steps = localized.steps || defaultSteps;
     pages[id].example = localized.example || pages[id].example;
   });
 
@@ -576,6 +720,11 @@ const dictionaries: Record<Locale, { ui: Record<string, string>; pages: Record<P
   zh: { ui: ui.zh, pages: translatePages('zh') },
   ja: { ui: ui.ja, pages: translatePages('ja') },
   ko: { ui: ui.ko, pages: translatePages('ko') },
+  es: { ui: ui.es, pages: translatePages('es') },
+  pt: { ui: ui.pt, pages: translatePages('pt') },
+  de: { ui: ui.de, pages: translatePages('de') },
+  fr: { ui: ui.fr, pages: translatePages('fr') },
+  ru: { ui: ui.ru, pages: translatePages('ru') },
 };
 
 export function normalizeLocale(value: unknown): Locale {
@@ -583,6 +732,11 @@ export function normalizeLocale(value: unknown): Locale {
   if (raw.startsWith('zh') || raw.includes('中文')) return 'zh';
   if (raw.startsWith('ja') || raw.includes('日本')) return 'ja';
   if (raw.startsWith('ko') || raw.includes('한국')) return 'ko';
+  if (raw.startsWith('es')) return 'es';
+  if (raw.startsWith('pt')) return 'pt';
+  if (raw.startsWith('de')) return 'de';
+  if (raw.startsWith('fr')) return 'fr';
+  if (raw.startsWith('ru')) return 'ru';
   return 'en';
 }
 

@@ -4,8 +4,8 @@ export const siteConfig = {
   contactEmail: 'duhao1008@126.com',
   defaultLocale: 'en',
   directories: {
-    appListUrl: 'https://hao-tools.com/json/app_list.json',
-    siteListUrl: 'https://hao-tools.com/json/site_list.json',
+    appListUrl: 'https://cloudflare-api.hao-tools.com/resources?page=1&pageSize=8&type=1',
+    siteListUrl: 'https://cloudflare-api.hao-tools.com/resources?page=1&pageSize=8&type=2',
     pageSize: 8,
   },
   relatedTools: [

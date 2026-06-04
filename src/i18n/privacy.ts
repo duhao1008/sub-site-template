@@ -11,7 +11,7 @@ interface PrivacyContent {
   items: PrivacyItem[];
 }
 
-const privacyContent: Record<Locale, PrivacyContent> = {
+const privacyContent: Partial<Record<Locale, PrivacyContent>> = {
   en: {
     intro: 'JSON Tools is designed to keep pasted JSON on your device. The tool pages do not require accounts or file uploads.',
     updated: 'Last updated: 2026-05-31',
@@ -55,5 +55,5 @@ const privacyContent: Record<Locale, PrivacyContent> = {
 };
 
 export function getPrivacyContent(locale: Locale): PrivacyContent {
-  return privacyContent[locale] || privacyContent.en;
+  return privacyContent[locale] || privacyContent.en!;
 }

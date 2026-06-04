@@ -11,12 +11,19 @@
         <div class="directory-toolbar">
           <label>
             <span class="sr-only">Filter tools by name</span>
-            <input v-model="query" type="search" :placeholder="labels.toolSearchPlaceholder" />
+            <input
+              id="site-directory-keyword"
+              v-model="query"
+              name="keyword"
+              type="search"
+              :placeholder="labels.toolSearchPlaceholder"
+              @keydown.enter="applySearch"
+            />
           </label>
-          <span>{{ filteredItems.length }} / {{ items.length }}</span>
+          <button type="button" @click="applySearch">{{ labels.search }}</button>
         </div>
 
-        <p v-if="filteredItems.length === 0" class="directory-status">{{ labels.noResults }}</p>
+        <p v-if="items.length === 0" class="directory-status">{{ labels.noResults }}</p>
         <div v-else class="directory-grid">
           <a v-for="site in pagedItems" :key="site.url + site.name" class="directory-card" :href="site.url" target="_blank" rel="noopener">
             <span class="directory-card-copy">
@@ -59,12 +66,17 @@ interface RemoteSite {
   }>>;
 }
 
+interface RemoteResource<T> {
+  json?: T;
+}
+
 interface RemoteSiteList {
   subsites?: RemoteSite[];
+  items?: RemoteResource<RemoteSite>[];
 }
 
 const { locale, labels, page } = useLocalizedPage('siteList');
-const { items, query, currentPage, loading, error, filteredItems, pageCount, pagedItems } = useRemoteDirectory<
+const { items, query, applySearch, currentPage, loading, error, pageCount, pagedItems } = useRemoteDirectory<
   RemoteSiteList,
   SiteItem,
   Locale
@@ -74,17 +86,23 @@ const { items, query, currentPage, loading, error, filteredItems, pageCount, pag
   pageSize: siteConfig.directories.pageSize,
   errorMessage: 'Failed to load tools.',
   mapItems: mapSites,
-  getSearchText: (site) => [site.name, site.description].filter(Boolean).join(' '),
 });
 
 function mapSites(data: RemoteSiteList, currentLocale: Locale): SiteItem[] {
-  return (data.subsites || []).map((site) => {
+  return getRemoteSites(data).map((site) => {
     const localized = site.translations?.[currentLocale] || site.translations?.en;
     return {
       name: localized?.siteName || site.siteName,
       description: localized?.shortFunctions || site.shortFunctions,
       url: localized?.url || site.url,
     };
-  });
+  }).filter((site) => site.name && site.url);
+}
+
+function getRemoteSites(data: RemoteSiteList): RemoteSite[] {
+  if (data.subsites) return data.subsites;
+  return (data.items || [])
+    .map((item) => item.json)
+    .filter((site): site is RemoteSite => Boolean(site));
 }
 </script>
